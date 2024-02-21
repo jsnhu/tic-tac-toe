@@ -46,8 +46,9 @@ function Cell() {
     const setValue = (player) => {
         if (value == null) {
             value = player;
+            return true;
         } else {
-            console.log('Already modified cell.')
+            return false;
         }
     }
 
