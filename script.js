@@ -10,6 +10,7 @@ const g = Gameboard();
 console.log(g.getBoard());
 g.makeMove(0,0,"x");
 console.log(g.getBoard()[0][0].getValue() == "x");
+console.log(g.printBoard());
 
 // functions
 
@@ -27,6 +28,19 @@ function Gameboard() {
 
     const getBoard = () => board;
 
+    const printBoard = () => {
+        const stringBoard = [];
+
+        for (let i = 0; i < rows; i++) {
+            stringBoard[i] = [];
+            for (let j = 0; j < columns; j++) {
+                stringBoard[i][j] = board[i][j].getValue();
+            }
+        }
+
+        console.table(stringBoard);
+    }
+
     const makeMove = (row, column, player) => {
         board[row][column].setValue(player);
     };
@@ -34,6 +48,7 @@ function Gameboard() {
 
     return {
         getBoard,
+        printBoard,
         makeMove,
     };
 }
