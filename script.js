@@ -73,15 +73,15 @@ function Cell() {
     };
 }
 
-function GameController(userOneName = "User 1", userTwoName = "User 2") {
+function GameController(playerOneName = "Player 1", playerTwoName = "Player 2") {
     const board = Gameboard();
     const players = [
         {
-            name: userOneName,
+            name: playerOneName,
             symbol: "x",
         },
         {
-            name: userTwoName,
+            name: playerTwoName,
             symbol: "o",
         }
     ];
