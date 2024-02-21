@@ -109,12 +109,13 @@ function GameController(playerOneName = "Player 1", playerTwoName = "Player 2") 
     }
 
     const playRoundForActivePlayer = (row, column) => {
-        if (board.makeMove(row, column, activePlayer.symbol)) {
-            console.log(`${activePlayer.name} placed ${activePlayer.symbol} at row ${row}, column ${column}.`)
-            switchPlayerTurn();
-            printNewRound();
+        if (!board.makeMove(row, column, activePlayer.symbol)) {
+            return;
         }
-
+        console.log(`${activePlayer.name} placed ${activePlayer.symbol} at row ${row}, column ${column}.`)
+        switchPlayerTurn();
+        printNewRound();
+        
     }
 
     printNewRound();
