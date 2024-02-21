@@ -1,3 +1,18 @@
+// testing
+const a = Cell();
+console.log(a.getValue() == null);
+a.setValue("x");
+console.log(a.getValue() == "x");
+a.setValue("o");
+console.log(a.getValue() == "x");
+
+const g = Gameboard();
+console.log(g.getBoard());
+g.makeMove(0,0,"x");
+console.log(g.getBoard()[0][0].getValue() == "x");
+
+// functions
+
 function Gameboard() {
     const rows = 3;
     const columns = 3;
@@ -11,22 +26,26 @@ function Gameboard() {
     }
 
     const getBoard = () => board;
+
+    const makeMove = (row, column, player) => {
+        board[row][column].setValue(player);
+    };
+
+
     return {
-        getBoard
+        getBoard,
+        makeMove,
     };
 }
 
 function Cell() {
-    let value = 0;
+    let value = null;
 
     const getValue = () => value;
 
-    const setX = () => setValue(1);
-    const setO = () => setValue(2);
-    
-    const setValue = (newValue) => {
-        if (value == 0) {
-            value = newValue;
+    const setValue = (player) => {
+        if (value == null) {
+            value = player;
         } else {
             console.log('Already modified cell.')
         }
@@ -34,7 +53,6 @@ function Cell() {
 
     return {
         getValue,
-        setX,
-        setO,
+        setValue,
     };
 }
