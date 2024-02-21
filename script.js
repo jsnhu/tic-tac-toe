@@ -41,8 +41,8 @@ function Gameboard() {
         console.table(stringBoard);
     }
 
-    const makeMove = (row, column, player) => {
-        board[row][column].setValue(player);
+    const makeMove = (row, column, symbol) => {
+        board[row][column].setValue(symbol);
     };
 
 
@@ -58,9 +58,9 @@ function Cell() {
 
     const getValue = () => value;
 
-    const setValue = (player) => {
+    const setValue = (symbol) => {
         if (value == null) {
-            value = player;
+            value = symbol;
             return true;
         } else {
             return false;
@@ -71,4 +71,19 @@ function Cell() {
         getValue,
         setValue,
     };
+}
+
+function GameController(userOneName = "User 1", userTwoName = "User 2") {
+    const board = Gameboard();
+    const players = [
+        {
+            name: userOneName,
+            symbol: "x",
+        },
+        {
+            name: userTwoName,
+            symbol: "o",
+        }
+    ];
+
 }
