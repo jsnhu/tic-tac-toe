@@ -1,20 +1,35 @@
 // testing
-const a = Cell();
-console.log(a.getValue() == null);
-a.setValue("x");
-console.log(a.getValue() == "x");
-a.setValue("o");
-console.log(a.getValue() == "x");
+// const a = Cell();
+// console.log(a.getValue() == null);
+// a.setValue("x");
+// console.log(a.getValue() == "x");
+// a.setValue("o");
+// console.log(a.getValue() == "x");
 
-const g = Gameboard();
-console.log(g.getBoard());
-g.makeMove(0,0,"x");
-console.log(g.getBoard()[0][0].getValue() == "x");
-console.log(g.printBoard());
+// const g = Gameboard();
+// console.log(g.getBoard());
+// g.makeMove(0,0,"x");
+// console.log(g.getBoard()[0][0].getValue() == "x");
+// console.log(g.printBoard());
+
+// console.log("--------------")
+
+// const gC = GameController();
+// gC.playRoundForActivePlayer(0,0);
+// gC.playRoundForActivePlayer(2,2);
+// gC.playRoundForActivePlayer(0,1);
+// gC.playRoundForActivePlayer(2,1);
+// gC.playRoundForActivePlayer(0,2);
 
 console.log("--------------")
 
-const gC = GameController();
+const gC2 = GameController();
+gC2.playRoundForActivePlayer(0,2);
+gC2.playRoundForActivePlayer(0,0);
+gC2.playRoundForActivePlayer(2,2);
+gC2.playRoundForActivePlayer(1,0);
+gC2.playRoundForActivePlayer(1,1);
+gC2.playRoundForActivePlayer(2,0);
 
 // functions
 
@@ -108,13 +123,44 @@ function GameController(playerOneName = "Player 1", playerTwoName = "Player 2") 
         console.log(`${activePlayer.name}'s turn.`)
     }
 
+    const checkIfMoveWonGame = (row, column) => {
+        // check row win
+        let rowWinFlag = board.getBoard()[row].every(entry => entry.getValue() == board.getBoard()[row][0].getValue());
+
+        // check column win
+        const compareValue = board.getBoard()[0][column].getValue();
+        let columnWinFlag = true;
+
+        for (let i = 1; i < board.getBoard()[0].length; i++) {
+            if(board.getBoard()[i][column].getValue() != compareValue) {
+                columnWinFlag = false;
+                break;
+            };
+        }
+
+        // check diagonal win
+        // TODO
+
+        return (rowWinFlag || columnWinFlag);
+
+    };
+
     const playRoundForActivePlayer = (row, column) => {
         if (!board.makeMove(row, column, activePlayer.symbol)) {
             return;
         }
+
         console.log(`${activePlayer.name} placed ${activePlayer.symbol} at row ${row}, column ${column}.`)
-        switchPlayerTurn();
-        printNewRound();
+
+        if (checkIfMoveWonGame(row, column)) {
+            board.printBoard();
+            console.log(`Game won by ${activePlayer.name}`)
+
+        } else {
+            switchPlayerTurn();
+            printNewRound();
+        }
+
         
     }
 
