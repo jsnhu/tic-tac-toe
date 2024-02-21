@@ -12,6 +12,10 @@ g.makeMove(0,0,"x");
 console.log(g.getBoard()[0][0].getValue() == "x");
 console.log(g.printBoard());
 
+console.log("--------------")
+
+const gC = GameController();
+
 // functions
 
 function Gameboard() {
@@ -42,7 +46,7 @@ function Gameboard() {
     }
 
     const makeMove = (row, column, symbol) => {
-        board[row][column].setValue(symbol);
+        return board[row][column].setValue(symbol);
     };
 
 
@@ -63,6 +67,7 @@ function Cell() {
             value = symbol;
             return true;
         } else {
+            console.log('Invalid move.')
             return false;
         }
     }
@@ -85,5 +90,38 @@ function GameController(playerOneName = "Player 1", playerTwoName = "Player 2") 
             symbol: "o",
         }
     ];
+
+    let activePlayer = players[0];
+
+    const getActivePlayer = () => activePlayer;
+
+    const switchPlayerTurn = () => {
+        if (activePlayer === players[0]) {
+            activePlayer = players[1];
+        } else {
+            activePlayer = players[0];
+        }
+    };
+
+    const printNewRound = () => {
+        board.printBoard();
+        console.log(`${activePlayer.name}'s turn.`)
+    }
+
+    const playRoundForActivePlayer = (row, column) => {
+        if (board.makeMove(row, column, activePlayer.symbol)) {
+            console.log(`${activePlayer.name} placed ${activePlayer.symbol} at row ${row}, column ${column}.`)
+            switchPlayerTurn();
+            printNewRound();
+        }
+
+    }
+
+    printNewRound();
+
+    return {
+        getActivePlayer,
+        playRoundForActivePlayer,
+    }
 
 }
